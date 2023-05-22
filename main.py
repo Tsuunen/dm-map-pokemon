@@ -6,9 +6,10 @@ from math import sqrt
 # Variables
 x = 0
 y = 0
-T=[]
-X=[]
-Y=[]
+T = []
+X = []
+Y = []
+type = [["eau", "#2581ee"], ["roche", "#b1ab82"], ["feu", "#e72324"], ["plante", "#3da224"], ["insecte", "#93a213"], ["electrique", "#fbc101"], ["dragon", "#4f61e3"], ["poison", "#923fcc"], ["glace", "#3cd9fe"]]
 
   #########################################################
  #                                                         #
@@ -22,13 +23,8 @@ def getClickCoord(event):
 def updateCoordLabels(event):
     coords = getClickCoord(event)
 
-    if coords[0] > 425 or coords[1] > 310:
-        xLabel.config( text=f"x : none" )
-        yLabel.config( text=f"y : none" )
-
-    else:
-        xLabel.config( text=f"x : {coords[0]}" )
-        yLabel.config( text=f"y : {coords[1]}" )
+    xLabel.config( text=f"x : {coords[0]}" )
+    yLabel.config( text=f"y : {coords[1]}" )
 
 # KNN
 def chargement(nomfichier) :
@@ -116,7 +112,8 @@ def KNN(event):
     voisins = k_voisins(dist, k)
     pred = predire_classe(voisins)
 
-    return pred
+    resultLabel.config( text=f"Dans cette zone, vous croiserez\n probablement des pokemons du type :" )
+    typeLabel.config(text=type[pred][0], fg=type[pred][1])
 
 
 
@@ -128,7 +125,9 @@ def KNN(event):
 
 # Instanciation de la fenêtre
 fen = Tk()
-fen.geometry("600x330")
+fen.geometry("600x335")
+fen.minsize(660, 335)
+fen.maxsize(660, 335)
 
 colLeft = Frame(fen, width="425")
 # Affichage de la carte
@@ -150,7 +149,7 @@ coordFrame.pack(side = LEFT)
 # City name
 cityName = "Johto"
 cityNameLabel = Label(statusFrame, text="")
-cityNameLabel.pack(side = RIGHT, padx=140)
+cityNameLabel.pack(side = RIGHT, padx=150)
 
 statusFrame.pack()
 
@@ -158,18 +157,28 @@ colLeft.pack( side = LEFT )
 
 colRigth = Frame(fen)
 
+kFrame = Frame(colRigth)
 # Affichage du slider k
-kLabel = Label(colRigth, text="Nombre de voisin :")
+kLabel = Label(kFrame, text="Nombre de voisin :")
 kLabel.pack()
 
-kSlider = Scale(colRigth, from_=1, to=42, orient=HORIZONTAL)
-kSlider.pack( padx=30 )
+kSlider = Scale(kFrame, from_=1, to=42, orient=HORIZONTAL)
+kSlider.pack( padx=65 )
+
+kFrame.pack( pady=30 )
+
+# Affichage du résultat de l'algo KNN
+resultLabel = Label(colRigth, text="")
+resultLabel.pack()
+
+typeLabel = Label(colRigth, text="", font=("", 18))
+typeLabel.pack( pady=5 )
 
 
 colRigth.pack( side = RIGHT )
 
-# Update coordLabels
-fen.bind("<Button-1>", KNN)
+# bind event pour avoir la prediction de l'algo KNN
+carteLabel.bind("<Button-1>", KNN)
 
 chargement("data.csv")
 
