@@ -4,6 +4,8 @@ from math import sqrt
 
 
 # Variables
+width = 660
+height = 355
 x = 0
 y = 0
 T = []
@@ -125,9 +127,12 @@ def KNN(event):
 
 # Instanciation de la fenêtre
 fen = Tk()
-fen.geometry("600x335")
-fen.minsize(660, 335)
-fen.maxsize(660, 335)
+fen.geometry(f"{width}x{height}")
+fen.minsize(width, height)
+fen.maxsize(width, height)
+
+topBarLabel = Label(text="Carte intéractive de JOHTO", font=("", 12, 'bold'))
+topBarLabel.pack()
 
 colLeft = Frame(fen, width="425")
 # Affichage de la carte
@@ -147,7 +152,6 @@ yLabel.pack(side = RIGHT, padx=15)
 coordFrame.pack(side = LEFT)
 
 # City name
-cityName = "Johto"
 cityNameLabel = Label(statusFrame, text="")
 cityNameLabel.pack(side = RIGHT, padx=150)
 
