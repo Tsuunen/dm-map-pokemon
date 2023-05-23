@@ -116,7 +116,8 @@ def KNN(event):
     k = kSlider.get()
 
     if k == 42:
-        pygame.mixer.music.load("musique.mp3")
+        pygame.mixer.music.load("musique.wav")
+        pygame.mixer.music.play(loops=0)
 
     voisins = k_voisins(dist, k)
     pred = predire_classe(voisins)
