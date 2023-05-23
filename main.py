@@ -1,6 +1,9 @@
 from tkinter import *
 import csv
 from math import sqrt
+import pygame
+
+pygame.mixer.init()
 
 
 # Variables
@@ -111,6 +114,10 @@ def KNN(event):
     dist = distance(coords[0], coords[1])
 
     k = kSlider.get()
+
+    if k == 42:
+        pygame.mixer.music.load("musique.mp3")
+
     voisins = k_voisins(dist, k)
     pred = predire_classe(voisins)
 
@@ -130,6 +137,7 @@ fen = Tk()
 fen.geometry(f"{width}x{height}")
 fen.minsize(width, height)
 fen.maxsize(width, height)
+fen.title("Carte intéractive pokemon")
 
 topBarLabel = Label(text="Carte intéractive de JOHTO", font=("", 12, 'bold'))
 topBarLabel.pack()
